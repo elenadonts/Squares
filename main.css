@@ -1,0 +1,54 @@
+#left-delete-button-wrapper {
+    margin-top: 1px;
+    float: left;
+}
+
+#squares-table {
+    border: 1px solid dodgerblue;
+    border-spacing: 0;
+    display: inline-table;
+}
+
+#right-add-button {
+    display: inline-block;
+}
+
+.control-button {
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    font-size: 50px;
+    color: white;
+    border: 1px solid white;
+}
+
+.table-cell {
+    background-color: dodgerblue;
+    height: 70px;
+    width: 70px;
+    border: 1px solid white;
+    padding: 0;
+}
+
+.control-button span {
+    min-height: 70px;
+    display: inline-flex;
+    align-items: center;
+}
+ #top-delete-button, #bottom-add-button {
+     margin-left: 73px; /* fix*/
+ }
+
+ #top-delete-button, #left-delete-button {
+     background-color: red;
+     transition-duration: 0.2s;
+     visibility: hidden;
+ }
+
+
+ #right-add-button, #bottom-add-button {
+     background-color: orange;
+ }
+ .control-button:hover {
+     opacity: 0.7;
+ }

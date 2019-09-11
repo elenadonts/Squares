@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>Blocks</title>
+</head>
+<body>
+    <div id="top-delete-button-wrapper">
+        <div id="top-delete-button" class="control-button" onclick="deleteColumn()"><span>-</span></div>
+    </div>
+
+    <div id="table-and-controls-wrapper">
+        <div id="left-delete-button-wrapper">
+            <div id="left-delete-button" class="control-button" onclick="deleteRow()"><span>-</span></div>
+        </div>
+
+        <table id="squares-table">
+            <tr>
+                <td class="table-cell" onmouseover="moveDeleteButtons(this)"></td>
+            </tr>
+        </table>
+
+        <div id="right-add-button" class="control-button" onclick="addColumn()"><span>+</span></div>
+    </div>
+
+    <div id="bottom-add-button" class="control-button" onclick="addRow()"><span>+</span></div>
+    <script src="script.js"></script>
+
+
+</body>
+</html>
