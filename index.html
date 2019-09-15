@@ -7,16 +7,20 @@
 <body>
     <template>
         <link rel="stylesheet" type="text/css" href="main.css" />
-        <div id="top-delete-button" class="control-button"><span>-</span></div>
-        <div id="table-and-controls-wrapper">
-            <div id="left-delete-button" class="control-button"><span>-</span></div>
 
+        <div id="top-delete-button-wrapper">
+            <div id="top-delete-button" class="control-button"><span>-</span></div>
+        </div>
+
+        <div id="table-and-controls-wrapper">
+            <div id="left-delete-button-wrapper">
+                <div id="left-delete-button" class="control-button" ><span>-</span></div>
+            </div>
             <table id="squares-table">
                 <tr>
-                    <td id="table-cell"></td>
+                    <td class="squares-table__table-cell"></td>
                 </tr>
             </table>
-
             <div id="right-add-button" class="control-button"><span>+</span></div>
         </div>
 
@@ -26,7 +30,6 @@
 
     <script src="dynamic-squares.js"></script>
     <dynamic-squares></dynamic-squares>
-
 
 </body>
 </html>

@@ -13,16 +13,17 @@
     text-align: center;
     font-size: 50px;
     color: white;
-    margin: 1px;
     cursor: pointer;
+    border: 1px solid white;
 }
 
-#table-cell {
+.squares-table__table-cell {
     background-color: dodgerblue;
     height: 70px;
     width: 70px;
     border: 1px solid white;
     padding: 0;
+    min-width: 70px;
 }
 
 .control-button span {
@@ -30,18 +31,28 @@
     align-items: center;
     display: flex;
     justify-content: center;
+    min-width: 70px;
 }
 
 #bottom-add-button {
-     margin-left: 73px;
+    margin-left: 72px;
+}
+
+#left-delete-button-wrapper {
+    width: 70px;
+    margin: 1px;
+}
+
+#top-delete-button-wrapper {
+    height: 70px;
+    margin: 1px;
 }
 
 #top-delete-button, #left-delete-button {
-    transition-duration: 0.2s;
-    visibility: hidden;
+    display: none;
+    transition: margin 0.2s;
     background-color: red;
 }
-
 
 #right-add-button, #bottom-add-button {
     background-color: orange;
