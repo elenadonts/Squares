@@ -15,6 +15,8 @@
     color: white;
     cursor: pointer;
     border: 1px solid white;
+    opacity: 1;
+    transition: opacity .2s linear;
 }
 
 .squares-table__table-cell {
@@ -50,7 +52,7 @@
 
 #top-delete-button, #left-delete-button {
     display: none;
-    transition: margin 0.2s;
+    transition: margin 0.2s, opacity .2s linear;
     background-color: red;
 }
 
@@ -59,5 +61,6 @@
 }
 
 .control-button:hover {
+    transition: opacity .2s linear;
     opacity: 0.7;
 }
