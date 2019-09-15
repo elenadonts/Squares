@@ -2,27 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="main.css">
     <title>Blocks</title>
 </head>
 <body>
+    <template>
+        <link rel="stylesheet" type="text/css" href="main.css" />
+        <div id="top-delete-button" class="control-button"><span>-</span></div>
+        <div id="table-and-controls-wrapper">
+            <div id="left-delete-button" class="control-button"><span>-</span></div>
 
-    <div id="top-delete-button" class="control-button" onclick="deleteColumn()"><span>-</span></div>
+            <table id="squares-table">
+                <tr>
+                    <td id="table-cell"></td>
+                </tr>
+            </table>
 
-    <div id="table-and-controls-wrapper">
-        <div id="left-delete-button" class="control-button" onclick="deleteRow()"><span>-</span></div>
+            <div id="right-add-button" class="control-button"><span>+</span></div>
+        </div>
 
-        <table id="squares-table">
-            <tr>
-                <td class="table-cell" onmouseover="moveDeleteButtons(this)"></td>
-            </tr>
-        </table>
+        <div id="bottom-add-button" class="control-button"><span>+</span></div>
+    </template>
 
-        <div id="right-add-button" class="control-button" onclick="addColumn()"><span>+</span></div>
-    </div>
 
-    <div id="bottom-add-button" class="control-button" onclick="addRow()"><span>+</span></div>
-    <script src="script.js"></script>
+    <script src="dynamic-squares.js"></script>
+    <dynamic-squares></dynamic-squares>
 
 
 </body>
