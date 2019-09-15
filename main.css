@@ -52,7 +52,7 @@
 
 #top-delete-button, #left-delete-button {
     display: none;
-    transition: margin 0.2s, opacity .2s linear;
+    transition: margin .2s, opacity .2s linear;
     background-color: red;
 }
 

@@ -54,16 +54,20 @@ customElements.define(tagName,
             }
 
             function deleteRow(){
+                let currentMargin = parseInt(leftDeleteButton.style.marginTop);
+                let rowIndex = currentMargin / (cellSize + cellBorderSize * 2);
                 if (currentTableHeight === 1) return;
-                squaresTable.deleteRow(currentTableHeight - 1);
+                squaresTable.deleteRow(rowIndex);
                 hideDeleteButtons(true);
                 currentTableHeight--;
             }
 
             function deleteColumn(){
+                let currentMargin = parseInt(topDeleteButton.style.marginLeft);
+                let colIndex = (currentMargin - initialLeftMargin) / (cellSize + cellBorderSize * 2);
                 if (currentTableWidth === 1) return;
                 for (let row of squaresTable.rows){
-                    row.deleteCell(-1);
+                    row.deleteCell(colIndex);
                 }
                 hideDeleteButtons(true);
                 currentTableWidth--;
