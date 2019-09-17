@@ -1,44 +1,55 @@
 "use strict";
 
-const cellBorderSize = 1;
-const cellSize = 70;
-const initialLeftMargin = cellSize + cellBorderSize * 2;
+const cellBorderSize = 1,
+    cellSize = 50;
 
-const tagName = "dynamic-squares";
-const template = document.querySelector("template");
+const tagName = "dynamic-squares",
+    template = document.querySelector("template");
 
 customElements.define(tagName,
     class DynamicSquares extends HTMLElement {
         constructor(){
             super();
-            let currentTableWidth = 1;
-            let currentTableHeight = 1;
+            let currentTableWidth = 1,
+                currentTableHeight = 1;
+
             const shadowRoot = this.attachShadow({mode: 'open'});
             shadowRoot.appendChild(template.content.cloneNode(true));
 
-            const squaresTable =  shadowRoot.querySelector("#squares-table");
-            const topDeleteButton = shadowRoot.querySelector("#top-delete-button");
-            const leftDeleteButton = shadowRoot.querySelector("#left-delete-button");
-            const rightAddButton = shadowRoot.querySelector("#right-add-button");
-            const bottomAddButton = shadowRoot.querySelector("#bottom-add-button");
+            const squaresTable =  shadowRoot.querySelector("#squares-table"),
+                buttonDeleteTop = shadowRoot.querySelector("#button-delete-top"),
+                buttonDeleteLeft = shadowRoot.querySelector("#button-delete-left"),
+                buttonAddRight = shadowRoot.querySelector("#button-add-right"),
+                buttonAddBottom = shadowRoot.querySelector("#button-add-bottom");
 
-            rightAddButton.addEventListener("click", addColumn);
-            bottomAddButton.addEventListener("click", addRow);
-            leftDeleteButton.addEventListener("click", deleteRow);
-            topDeleteButton.addEventListener("click", deleteColumn);
+            setupRowsAndColumns(this.rows, this.columns);
+
+            buttonAddRight.addEventListener("click", addColumn);
+            buttonAddBottom.addEventListener("click", addRow);
+            buttonDeleteLeft.addEventListener("click", deleteRow);
+            buttonDeleteTop.addEventListener("click", deleteColumn);
 
             // show "delete row" button if there's more than 1 row and "delete column" if there's more than 1 column
             // hide delete buttons onmouseleave from elements below
-            [squaresTable, topDeleteButton, leftDeleteButton].forEach(function (element) {
-                element.addEventListener("mouseleave", hideDeleteButtons.bind(this, false));
+            [squaresTable, buttonDeleteTop, buttonDeleteLeft].forEach(function (element) {
+                element.addEventListener("mouseleave", hideDeleteButtons);
                 element.addEventListener("mouseover", showDeleteButtons);
+            });
+
+            [buttonDeleteLeft, buttonDeleteTop].forEach(function (element) {
+                element.addEventListener("click", hideDeleteButtons);
             });
 
             //move delete buttons according to the mouse position
             squaresTable.addEventListener("mouseover", moveDeleteButtons);
 
+            function setupRowsAndColumns(rowsNumber, columnsNumber) {
+                while (currentTableWidth < columnsNumber) addColumn();
+                while (currentTableHeight < rowsNumber) addRow();
+            }
+
             function addColumn() {
-                for (let row of squaresTable.rows){
+                for (let row of squaresTable.rows) {
                     let currentRowLastCell = row.cells[currentTableWidth - 1];
                     let clone = currentRowLastCell.cloneNode(true);
                     row.appendChild(clone);
@@ -46,57 +57,70 @@ customElements.define(tagName,
                 currentTableWidth++;
             }
 
-            function addRow(){
+            function addRow() {
                 let lastRow = squaresTable.rows[currentTableHeight - 1];
                 let clone = lastRow.cloneNode(true);
                 squaresTable.appendChild(clone);
                 currentTableHeight++;
             }
 
-            function deleteRow(){
-                let currentMargin = parseInt(leftDeleteButton.style.marginTop);
-                let rowIndex = currentMargin / (cellSize + cellBorderSize * 2);
+            function deleteRow() {
                 if (currentTableHeight === 1) return;
+                let rowIndex = parseInt(buttonDeleteLeft.getAttribute("row"));
                 squaresTable.deleteRow(rowIndex);
-                hideDeleteButtons(true);
                 currentTableHeight--;
+
             }
 
-            function deleteColumn(){
-                let currentMargin = parseInt(topDeleteButton.style.marginLeft);
-                let colIndex = (currentMargin - initialLeftMargin) / (cellSize + cellBorderSize * 2);
+            function deleteColumn() {
                 if (currentTableWidth === 1) return;
-                for (let row of squaresTable.rows){
+                let colIndex = parseInt(buttonDeleteTop.getAttribute("col"));
+                for (let row of squaresTable.rows) {
                     row.deleteCell(colIndex);
                 }
-                hideDeleteButtons(true);
                 currentTableWidth--;
             }
 
-            function moveDeleteButtons(event){
-                let currentColIndex = event.path[0].cellIndex;
-                let currentRowIndex = event.path[1].rowIndex;
-                let nextTopDeleteButtonPosition = currentColIndex * (cellSize + cellBorderSize * 2) + initialLeftMargin;
-                let nextLeftDeleteButtonPosition = currentRowIndex * (cellSize + cellBorderSize * 2);
-                topDeleteButton.style.marginLeft = nextTopDeleteButtonPosition + "px";
-                leftDeleteButton.style.marginTop = nextLeftDeleteButtonPosition + "px";
+            function moveDeleteButtons(event) {
+                let currentColIndex = event.path[0].cellIndex,
+                    currentRowIndex = event.path[1].rowIndex;
+                let nextTopDeleteButtonPosition = currentColIndex * (cellSize + cellBorderSize * 2),
+                    nextLeftDeleteButtonPosition = currentRowIndex * (cellSize + cellBorderSize * 2);
+
+                buttonDeleteTop.style.marginLeft = nextTopDeleteButtonPosition + "px";
+                buttonDeleteLeft.style.marginTop = nextLeftDeleteButtonPosition + "px";
+
+                buttonDeleteLeft.setAttribute("row", currentRowIndex === undefined ?
+                    buttonDeleteLeft.getAttribute("row") : currentRowIndex);
+                buttonDeleteTop.setAttribute("col", currentColIndex === undefined ?
+                    buttonDeleteTop.getAttribute("col") : currentColIndex);
             }
 
-            function hideDeleteButtons(elementWasDeleted) {
-                if (!elementWasDeleted && (leftDeleteButton.matches(":hover") ||
-                    topDeleteButton.matches(":hover")))
-                    return;
-
-                topDeleteButton.style.display = "none";
-                leftDeleteButton.style.display = "none";
+            function hideDeleteButtons() {
+                buttonDeleteTop.style.display = "none";
+                buttonDeleteLeft.style.display = "none";
             }
 
-            function showDeleteButtons(){
-                let leftButtonVisibility = currentTableHeight > 1 ? "block" : "none";
-                let topButtonVisibility = currentTableWidth > 1 ? "block" : "none";
-                leftDeleteButton.style.display = leftButtonVisibility;
-                topDeleteButton.style.display = topButtonVisibility;
+            function showDeleteButtons() {
+                buttonDeleteLeft.style.display = currentTableHeight > 1 ? "block" : "none";
+                buttonDeleteTop.style.display = currentTableWidth > 1 ? "block" : "none";
             }
+        }
+
+        get columns() {
+            return this.getAttribute("columns");
+        }
+
+        set columns(columnsNumber) {
+            this.setAttribute("columns", columnsNumber);
+        }
+
+        get rows() {
+            return this.getAttribute("rows");
+        }
+
+        set rows(rowsNumber) {
+            this.setAttribute("rows", rowsNumber);
         }
     });
 

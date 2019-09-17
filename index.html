@@ -8,28 +8,27 @@
     <template>
         <link rel="stylesheet" type="text/css" href="main.css" />
 
-        <div id="top-delete-button-wrapper">
-            <div id="top-delete-button" class="control-button"><span>-</span></div>
+        <div id="button-delete-top-wrapper">
+            <div id="button-delete-top" class="control-button button-delete"><span>-</span></div>
         </div>
 
         <div id="table-and-controls-wrapper">
-            <div id="left-delete-button-wrapper">
-                <div id="left-delete-button" class="control-button" ><span>-</span></div>
+            <div id="button-delete-left-wrapper">
+                <div id="button-delete-left" class="control-button button-delete" ><span>-</span></div>
             </div>
             <table id="squares-table">
                 <tr>
                     <td class="squares-table__table-cell"></td>
                 </tr>
             </table>
-            <div id="right-add-button" class="control-button"><span>+</span></div>
+            <div id="button-add-right" class="control-button button-add"><span>+</span></div>
         </div>
-
-        <div id="bottom-add-button" class="control-button"><span>+</span></div>
+        <div id="button-add-bottom-wrapper">
+            <div id="button-add-bottom" class="control-button button-add"><span>+</span></div>
+        </div>
     </template>
 
-
+    <dynamic-squares columns="4" rows="4"></dynamic-squares>
     <script src="dynamic-squares.js"></script>
-    <dynamic-squares></dynamic-squares>
-
 </body>
 </html>
