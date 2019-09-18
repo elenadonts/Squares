@@ -17,7 +17,6 @@ customElements.define(tagName,
             shadowRoot.appendChild(template.content.cloneNode(true));
 
             const squaresTable =  shadowRoot.querySelector("#squares-table table");
-            console.log(squaresTable);
             const buttonDeleteTop = shadowRoot.querySelector(".button-delete-top");
             const buttonDeleteLeft = shadowRoot.querySelector(".button-delete-left");
             const buttonAddRight = shadowRoot.querySelector(".button-add-right");
