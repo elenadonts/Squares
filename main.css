@@ -1,11 +1,17 @@
 #squares-table {
     border: 1px solid #46A1E8;
     border-spacing: 0;
-    padding: 1px;
+    position: absolute;
+    display: inline-block;
+    margin: 55px;
 }
 
-#table-and-controls-wrapper {
-    display: flex;
+.squares-table__table-cell {
+    background-color: #46A1E8;
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    min-width: 50px;
 }
 
 .control-button {
@@ -16,15 +22,8 @@
     border: 1px solid white;
     opacity: 1;
     transition: opacity .2s linear;
-}
-
-.squares-table__table-cell {
-    background-color: #46A1E8;
-    height: 50px;
-    width: 50px;
-    border: 1px solid white;
-    padding: 0;
-    min-width: 50px;
+    position: absolute;
+    margin: 2px;
 }
 
 .control-button span {
@@ -33,37 +32,7 @@
     display: flex;
     justify-content: center;
     min-width: 50px;
-}
 
-#button-add-bottom-wrapper {
-    margin-left: 50px;
-    padding-left: 5px;
-    margin-top: 1px;
-}
-
-#button-delete-left-wrapper {
-    width: 52px;
-    padding-top: 2px;
-    margin-right: 1px;
-    box-sizing: border-box;
-}
-
-#button-delete-top-wrapper {
-    height: 52px;
-    margin-bottom: 1px;
-    margin-left: 50px;
-    padding-left: 5px;
-}
-
-#button-delete-left {
-    border-right: 2px solid white;
-}
-#button-delete-top {
-    border-bottom: 2px solid white;
-}
-
-#button-add-right {
-    margin: 1px;
 }
 
 .control-button:hover {
@@ -74,7 +43,7 @@
 .button-delete {
     font-size: 30px;
     font-weight: 100;
-    display: none;
+    visibility: hidden;
     transition: margin .2s, opacity .2s linear;
     background-color: #B60406;
 }
@@ -88,4 +57,27 @@
 .button-delete span {
     min-height: 45px;
 }
+
+.button-add-right {
+    top: 0;
+    left: 100%;
+    margin-top: 1px;
+}
+
+.button-add-bottom {
+    top: 100%;
+    left: 0;
+    margin-left: 1px;
+}
+
+.button-delete-left {
+    right: 100%;
+    top: 0;
+}
+.button-delete-top {
+    bottom: 100%;
+    left: 0;
+    /*margin-bottom: 2px;*/
+}
+
 

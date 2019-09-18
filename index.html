@@ -8,23 +8,16 @@
     <template>
         <link rel="stylesheet" type="text/css" href="main.css" />
 
-        <div id="button-delete-top-wrapper">
-            <div id="button-delete-top" class="control-button button-delete"><span>-</span></div>
-        </div>
-
-        <div id="table-and-controls-wrapper">
-            <div id="button-delete-left-wrapper">
-                <div id="button-delete-left" class="control-button button-delete" ><span>-</span></div>
-            </div>
-            <table id="squares-table">
+        <div id="squares-table">
+            <table>
                 <tr>
                     <td class="squares-table__table-cell"></td>
                 </tr>
             </table>
-            <div id="button-add-right" class="control-button button-add"><span>+</span></div>
-        </div>
-        <div id="button-add-bottom-wrapper">
-            <div id="button-add-bottom" class="control-button button-add"><span>+</span></div>
+            <div class="button-add-bottom control-button button-add"><span>+</span></div>
+            <div class="button-add-right control-button button-add"><span>+</span></div>
+            <div class="button-delete-left control-button button-delete" ><span>-</span></div>
+            <div class="button-delete-top control-button button-delete"><span>-</span></div>
         </div>
     </template>
 

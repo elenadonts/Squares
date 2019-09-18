@@ -1,10 +1,10 @@
 "use strict";
 
-const cellBorderSize = 1,
-    cellSize = 50;
+const cellBorderSize = 1;
+const cellSize = 50;
 
-const tagName = "dynamic-squares",
-    template = document.querySelector("template");
+const tagName = "dynamic-squares";
+const template = document.querySelector("template");
 
 customElements.define(tagName,
     class DynamicSquares extends HTMLElement {
@@ -16,11 +16,12 @@ customElements.define(tagName,
             const shadowRoot = this.attachShadow({mode: 'open'});
             shadowRoot.appendChild(template.content.cloneNode(true));
 
-            const squaresTable =  shadowRoot.querySelector("#squares-table"),
-                buttonDeleteTop = shadowRoot.querySelector("#button-delete-top"),
-                buttonDeleteLeft = shadowRoot.querySelector("#button-delete-left"),
-                buttonAddRight = shadowRoot.querySelector("#button-add-right"),
-                buttonAddBottom = shadowRoot.querySelector("#button-add-bottom");
+            const squaresTable =  shadowRoot.querySelector("#squares-table table");
+            console.log(squaresTable);
+            const buttonDeleteTop = shadowRoot.querySelector(".button-delete-top");
+            const buttonDeleteLeft = shadowRoot.querySelector(".button-delete-left");
+            const buttonAddRight = shadowRoot.querySelector(".button-add-right");
+            const buttonAddBottom = shadowRoot.querySelector(".button-add-bottom");
 
             setupRowsAndColumns(this.rows, this.columns);
 
@@ -44,8 +45,8 @@ customElements.define(tagName,
             squaresTable.addEventListener("mouseover", moveDeleteButtons);
 
             function setupRowsAndColumns(rowsNumber, columnsNumber) {
-                while (currentTableWidth < columnsNumber) addColumn();
-                while (currentTableHeight < rowsNumber) addRow();
+                for (let i = 1; i < rowsNumber; i++) addRow();
+                for (let i = 1; i < columnsNumber; i++) addColumn();
             }
 
             function addColumn() {
@@ -69,7 +70,7 @@ customElements.define(tagName,
                 let rowIndex = parseInt(buttonDeleteLeft.getAttribute("row"));
                 squaresTable.deleteRow(rowIndex);
                 currentTableHeight--;
-
+                hideDeleteButtons();
             }
 
             function deleteColumn() {
@@ -79,6 +80,7 @@ customElements.define(tagName,
                     row.deleteCell(colIndex);
                 }
                 currentTableWidth--;
+                hideDeleteButtons();
             }
 
             function moveDeleteButtons(event) {
@@ -97,13 +99,18 @@ customElements.define(tagName,
             }
 
             function hideDeleteButtons() {
-                buttonDeleteTop.style.display = "none";
-                buttonDeleteLeft.style.display = "none";
+                setTimeout(function () {
+                    if (shadowRoot.querySelector("table:hover") ||
+                    shadowRoot.querySelector(".button-delete:hover")) return;
+                    buttonDeleteTop.style.visibility = "hidden";
+                    buttonDeleteLeft.style.visibility = "hidden";
+                }, 500)
             }
 
+
             function showDeleteButtons() {
-                buttonDeleteLeft.style.display = currentTableHeight > 1 ? "block" : "none";
-                buttonDeleteTop.style.display = currentTableWidth > 1 ? "block" : "none";
+                buttonDeleteLeft.style.visibility = currentTableHeight > 1 ? "visible" : "hidden";
+                buttonDeleteTop.style.visibility = currentTableWidth > 1 ? "visible" : "hidden";
             }
         }
 
