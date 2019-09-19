@@ -32,8 +32,9 @@ customElements.define(tagName,
             // show "delete row" button if there's more than 1 row and "delete column" if there's more than 1 column
             // hide delete buttons onmouseleave from elements below
             [squaresTable, buttonDeleteTop, buttonDeleteLeft].forEach(function (element) {
-                element.addEventListener("mouseleave", hideDeleteButtons);
                 element.addEventListener("mouseover", showDeleteButtons);
+                element.addEventListener("mouseleave", hideDeleteButtonsWithTimeout);
+
             });
 
             [buttonDeleteLeft, buttonDeleteTop].forEach(function (element) {
@@ -83,13 +84,13 @@ customElements.define(tagName,
             }
 
             function moveDeleteButtons(event) {
-                let currentColIndex = event.path[0].cellIndex,
-                    currentRowIndex = event.path[1].rowIndex;
-                let nextTopDeleteButtonPosition = currentColIndex * (cellSize + cellBorderSize * 2),
-                    nextLeftDeleteButtonPosition = currentRowIndex * (cellSize + cellBorderSize * 2);
+                if (event.target.tagName === "TABLE") return;
 
-                buttonDeleteTop.style.marginLeft = nextTopDeleteButtonPosition + "px";
-                buttonDeleteLeft.style.marginTop = nextLeftDeleteButtonPosition + "px";
+                let currentColIndex = event.path[0].cellIndex;
+                let currentRowIndex = event.path[1].rowIndex;
+
+                buttonDeleteTop.style.left = (event.target.offsetLeft - cellBorderSize) + "px";
+                buttonDeleteLeft.style.top = (event.target.offsetTop - cellBorderSize) + "px";
 
                 buttonDeleteLeft.setAttribute("row", currentRowIndex === undefined ?
                     buttonDeleteLeft.getAttribute("row") : currentRowIndex);
@@ -98,14 +99,17 @@ customElements.define(tagName,
             }
 
             function hideDeleteButtons() {
+                buttonDeleteTop.style.visibility = "hidden";
+                buttonDeleteLeft.style.visibility = "hidden";
+            }
+            
+            function hideDeleteButtonsWithTimeout() {
                 setTimeout(function () {
                     if (shadowRoot.querySelector("table:hover") ||
                     shadowRoot.querySelector(".button-delete:hover")) return;
-                    buttonDeleteTop.style.visibility = "hidden";
-                    buttonDeleteLeft.style.visibility = "hidden";
+                    hideDeleteButtons();
                 }, 500)
             }
-
 
             function showDeleteButtons() {
                 buttonDeleteLeft.style.visibility = currentTableHeight > 1 ? "visible" : "hidden";

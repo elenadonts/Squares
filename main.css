@@ -1,7 +1,7 @@
 #squares-table {
     border: 1px solid #46A1E8;
     border-spacing: 0;
-    position: absolute;
+    position: relative;
     display: inline-block;
     margin: 55px;
 }
@@ -23,7 +23,7 @@
     opacity: 1;
     transition: opacity .2s linear;
     position: absolute;
-    margin: 2px;
+    /*margin: 2px;*/
 }
 
 .control-button span {
@@ -44,7 +44,7 @@
     font-size: 30px;
     font-weight: 100;
     visibility: hidden;
-    transition: margin .2s, opacity .2s linear;
+    transition: left .2s, top .2s, opacity .2s linear;
     background-color: #B60406;
 }
 
@@ -62,21 +62,25 @@
     top: 0;
     left: 100%;
     margin-top: 1px;
+    margin-left: 2px;
 }
 
 .button-add-bottom {
     top: 100%;
     left: 0;
     margin-left: 1px;
+    margin-top: 2px;
 }
 
 .button-delete-left {
     right: 100%;
     top: 0;
+    margin-right: 2px;
 }
 .button-delete-top {
     bottom: 100%;
     left: 0;
+    margin-bottom: 2px;
 }
 
 
